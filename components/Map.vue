@@ -2,20 +2,22 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import mapboxgl from 'mapbox-gl'
 import type { FeatureCollection } from 'geojson'
+import type { ToiletData } from '~/types/data'
 
 const props = defineProps<{
   data: FeatureCollection
+  currentPoint?: ToiletData | null
 }>()
 const emit = defineEmits<{
-  openPoint: []
+  openPoint: [point: ToiletData]
 }>()
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibGVvYm95ZXJieCIsImEiOiJjbGtyMWd4aWwxamprM3FwbHQ4cmZkemRmIn0.44F7SrV-wAk4HBOMV_XsMQ'
 
 const mapContainer = ref()
-
+let map: mapboxgl.Map
 onMounted(async () => {
-  const map = new mapboxgl.Map({
+  map = new mapboxgl.Map({
     container: mapContainer.value, // container ID
     style: 'mapbox://styles/mapbox/streets-v12', // style URL
     center: [4.8374121, 45.7708948], // starting position [lng, lat]
@@ -42,8 +44,7 @@ onMounted(async () => {
     map.on('click', 'toilets-layer', (e) => {
       // Copy coordinates array.
       const coordinates = e.features[0].geometry.coordinates.slice()
-      const description = e.features[0].properties.description
-      console.log(e.features[0])
+      const properties = e.features[0].properties
 
       // Ensure that if the map is zoomed out such that multiple
       // copies of the feature are visible, the popup appears
@@ -51,10 +52,10 @@ onMounted(async () => {
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180)
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
 
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(map)
+      emit('openPoint', {
+        coordinates,
+        ...properties,
+      } as ToiletData)
     })
     map.on('mouseenter', 'toilets-layer', () => {
       map.getCanvas().style.cursor = 'pointer'
@@ -65,6 +66,35 @@ onMounted(async () => {
       map.getCanvas().style.cursor = ''
     })
   })
+})
+
+const lastMapStatus = ref()
+watch(() => props.currentPoint, (point) => {
+  if (point) {
+    if (!lastMapStatus.value) {
+      lastMapStatus.value = {
+        center: map.getCenter(),
+        zoom: map.getZoom(),
+        padding: {
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+      }
+    }
+    map.easeTo({
+      center: point.coordinates,
+      zoom: 16,
+      padding: {
+        bottom: 200,
+      },
+    })
+  }
+  else if (lastMapStatus.value) {
+    map.easeTo(lastMapStatus.value)
+    lastMapStatus.value = null
+  }
 })
 </script>
 
