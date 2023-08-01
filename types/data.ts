@@ -3,6 +3,7 @@ import type { LngLatLike } from 'mapbox-gl'
 export interface ToiletData {
   coordinates: LngLatLike
   acceshandi?: boolean
+  infoloc?: string
   adresse: string
   codinsee: '69384'
   gid: number

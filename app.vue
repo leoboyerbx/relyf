@@ -23,9 +23,13 @@ function openPoint(point: ToiletData) {
       <span>Chargement de la carte...</span>
     </div>
     <Map v-if="data" :data="data" :current-point="currentPoint" @open-point="openPoint" />
-    <button class="absolute right-0 top-0" @click="currentPoint = null">
-      No
-    </button>
+    <div
+      v-if="currentPoint"
+      :key="currentPoint.gid"
+      class="pointer-events-none fixed bottom-0 left-0 z-10 h-full w-full overflow-y-auto p-4 pt-[35vh]"
+    >
+      <PointCard class="pointer-events-auto" :point="currentPoint" />
+    </div>
   </main>
 </template>
 

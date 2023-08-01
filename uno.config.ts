@@ -2,12 +2,11 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetTypography,
   presetUno,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
+import { presetDaisy } from 'unocss-preset-daisy'
 
 export default defineConfig({
   shortcuts: [
@@ -20,14 +19,7 @@ export default defineConfig({
     presetIcons({
       scale: 1.2,
     }),
-    presetTypography(),
-    presetWebFonts({
-      fonts: {
-        sans: 'DM Sans',
-        serif: 'DM Serif Display',
-        mono: 'DM Mono',
-      },
-    }),
+    presetDaisy(),
   ],
   transformers: [
     transformerDirectives(),

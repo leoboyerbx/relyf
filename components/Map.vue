@@ -87,7 +87,10 @@ watch(() => props.currentPoint, (point) => {
       center: point.coordinates,
       zoom: 16,
       padding: {
-        bottom: 200,
+        bottom: window.innerHeight * 0.62,
+        top: 0,
+        left: 0,
+        right: 0,
       },
     })
   }
@@ -101,3 +104,10 @@ watch(() => props.currentPoint, (point) => {
 <template>
   <div ref="mapContainer" class="relative h-full w-full" />
 </template>
+
+<style>
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+  @apply hidden;
+}
+</style>
