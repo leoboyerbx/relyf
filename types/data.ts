@@ -10,6 +10,7 @@ export interface ToiletData {
   payant?: boolean
   provenance: string
   unisexe?: boolean
+  hommes?: boolean
   web: string
 
 }

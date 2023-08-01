@@ -14,7 +14,7 @@ export const pwa: ModuleOptions = {
     name: appName,
     short_name: appName,
     description: appDescription,
-    theme_color: '#ffffff',
+    theme_color: '#4f14ee',
     icons: [
       {
         src: 'pwa-192x192.png',

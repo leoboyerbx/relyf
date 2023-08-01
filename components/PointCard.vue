@@ -49,25 +49,39 @@ const urlStreetView = computed(() => {
           <span class="scale-110 transform" i-ph:coins-bold />
         </button>
       </div>
+      <div v-if="point.hommes" class="tooltip tooltip-top" data-tip="Urinoir uniquement">
+        <button class="btn-circle btn-ghost flex items-center justify-center btn">
+          <span class="scale-110 transform" i-mdi:human-male />
+        </button>
+      </div>
     </header>
     <div class="card-body gap-0 px-4 py-4">
       <h2 class="card-title truncate">
         {{ point.adresse }}
       </h2>
       <span v-if="point.infoloc" class="font-light text-gray-400">{{ point.infoloc }}</span>
-      <div class="mt-2 w-full flex items-center gap-2 overflow-x-auto">
-        <a :href="urlNavigateTo" class="btn-neutral flex items-center gap-1 pr-3 btn">
-          Itinéraire
-          <span class="block scale-80 transform" i-material-symbols:directions />
-        </a>
-        <a v-if="point.web" :href="point.web" class="flex items-center gap-1 pr-3 btn">
-          {{ webDisplay }}
-          <span class="block scale-80 transform" i-uil:external-link-alt />
-        </a>
+      <div class="mt-2 w-full overflow-x-auto">
+        <div class="min-w-full flex items-center gap-2 whitespace-nowrap">
+          <a :href="urlNavigateTo" class="btn-neutral flex items-center gap-1 pr-3 btn">
+            Itinéraire
+            <span class="block scale-80 transform" i-material-symbols:directions />
+          </a>
+          <a v-if="point.web" :href="point.web" class="flex items-center gap-1 pr-3 btn">
+            {{ webDisplay }}
+            <span class="block scale-80 transform" i-uil:external-link-alt />
+          </a>
+          <a
+            :href="`mailto:contact@leoboyer.fr?subject=Problème sur Relyfy&body=Problème avec le point GID ${point.gid}.\r\nProblème: `"
+            class="btn-error flex items-center gap-1 pr-3 btn"
+          >
+            Signaler un problème
+            <span class="block scale-80 transform" i-uil:external-link-alt />
+          </a>
+        </div>
       </div>
 
-      <div class="mb-2 mt-4">
-        <h3 class="font-bold">
+      <div class="mt-4">
+        <h3 class="mb-2 font-bold">
           Street view
         </h3>
         <iframe :src="urlStreetView" class="h-96 w-full rounded" />

@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     renderJsonPayloads: true,
     typedPages: true,
   },
+  ssr: false,
 
   css: [
     '@unocss/reset/tailwind.css',

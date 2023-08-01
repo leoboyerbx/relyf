@@ -37,7 +37,7 @@ onMounted(async () => {
       paint: {
         'circle-radius': 8,
         'circle-stroke-width': 2,
-        'circle-color': '#3b78ea',
+        'circle-color': '#4f14ee',
         'circle-stroke-color': 'white',
       },
     })
@@ -65,6 +65,13 @@ onMounted(async () => {
     map.on('mouseleave', 'toilets-layer', () => {
       map.getCanvas().style.cursor = ''
     })
+    map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserHeading: true,
+    }), 'bottom-right')
   })
 })
 
@@ -105,9 +112,11 @@ watch(() => props.currentPoint, (point) => {
   <div ref="mapContainer" class="relative h-full w-full" />
 </template>
 
-<style>
-.mapboxgl-ctrl-bottom-left,
-.mapboxgl-ctrl-bottom-right {
+<style lang="scss">
+.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib {
   @apply hidden;
+}
+.mapboxgl-ctrl-group {
+  @apply \!shadow-none filter-invert hue-rotate-180 saturate-50 brightness-80 p-2.5;
 }
 </style>
