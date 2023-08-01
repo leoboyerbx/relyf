@@ -33,7 +33,7 @@ const urlStreetView = computed(() => {
 
 <template>
   <div class="card bg-base-100 min-h-full w-full shadow-xl">
-    <header class="flex gap-0 px-4 py-2 text-gray-400">
+    <header class="flex px-4 py-2 text-gray-400">
       <div class="tooltip tooltip-top" data-tip="Toilettes">
         <button class="btn-circle btn-ghost flex items-center justify-center btn">
           <span class="" i-icon-park-solid:public-toilet />
@@ -50,7 +50,7 @@ const urlStreetView = computed(() => {
         </button>
       </div>
     </header>
-    <div class="card-body gap-0 px-6 py-4">
+    <div class="card-body gap-0 px-4 py-4">
       <h2 class="card-title truncate">
         {{ point.adresse }}
       </h2>
@@ -66,9 +66,11 @@ const urlStreetView = computed(() => {
         </a>
       </div>
 
-      <div>
-        <h3>Street view</h3>
-        <iframe :src="urlStreetView" class="h-64 w-full" />
+      <div class="mb-2 mt-4">
+        <h3 class="font-bold">
+          Street view
+        </h3>
+        <iframe :src="urlStreetView" class="h-96 w-full rounded" />
       </div>
 
       <details class="mt-4">
@@ -80,3 +82,9 @@ const urlStreetView = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.tooltip {
+  @apply -mx-1;
+}
+</style>
